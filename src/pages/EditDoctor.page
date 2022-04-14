@@ -1,0 +1,45 @@
+<apex:page title="Doctor Edit: {!Doctor__c.Name}" standardController="Doctor__c">
+    <apex:sectionHeader title="{!$Label.Doctor_Title}" subtitle="{!Doctor__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.Edit_Doctor_Block_Title}" mode="edit">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="{!$Label.Save_Button}" action="{!Save}"/>
+                <apex:commandButton value="{!$Label.Save_And_New_Button}" action="{!Save}"/>
+                <apex:commandButton value="{!$Label.Cancel_Button}" action="{!Cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Information_Section}">
+                <apex:inputField required="true" value="{!Doctor__c.Name}"/>
+                <apex:inputField value="{!Doctor__c.First_name__c}"/>
+                <apex:inputField value="{!Doctor__c.Date_of_birth__c}"/>
+                <apex:inputField value="{!Doctor__c.Medical_field__c}"/>
+                <apex:inputField value="{!Doctor__c.Ward__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Address_Information_Section}">
+                <apex:inputField value="{!Doctor__c.City__c}"/>
+                <apex:inputField value="{!Doctor__c.Street__c}"/>
+                <apex:inputField value="{!Doctor__c.Postcode__c}"/>
+                <apex:inputField value="{!Doctor__c.Country__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Contact_Information_Section}">
+                <apex:inputField value="{!Doctor__c.Email__c}"/>
+                <apex:inputField value="{!Doctor__c.Phone_number__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Detailed_Information_Section}">
+                <apex:inputField value="{!Doctor__c.Salary__c}"/>
+                <apex:inputField value="{!Doctor__c.Receive_Birthday_Emails__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.System_Information_Section}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Owner"/>
+                    <apex:outputField value="{!Doctor__c.Owner.Name}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

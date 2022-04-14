@@ -1,0 +1,153 @@
+<apex:page controller="RandomDoctorsController" lightningStylesheets="true" showHeader="false">
+    <!--    <apex:pageMessages />-->
+    <!--    <apex:slds />-->
+    <!--    <apex:sectionHeader title="{!$Label.RandomDoctorsTitle}" subtitle="{!$Label.RandomDoctorsSubtitle}"/>-->
+    <!--    <apex:pageBlock >-->
+    <!--        <apex:dataTable value="{!doctorsList}" var="doctor" styleClass="slds-table slds-table_cell-buffer slds-table_bordered">-->
+    <!--            <apex:column value="{!doctor.First_name__c}" headerValue="{!$Label.firstName}" />-->
+    <!--            <apex:column value="{!doctor.Name}" headerValue="{!$Label.lastname}" />-->
+    <!--            <apex:column value="{!doctor.Email__c}" headerValue="{!$Label.email}" />-->
+    <!--            <apex:column value="{!doctor.City__c}" headerValue="{!$Label.city}" />-->
+    <!--            <apex:column value="{!doctor.Country__c}" headerValue="{!$Label.countryLabel}" />-->
+    <!--        </apex:dataTable>-->
+    <!--    </apex:pageBlock>-->
+
+    <html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Jakub Łabendowicz</title>
+        <link rel="icon" href="https://labendowicz.pl/jakubLabendowicz.github.io/graphics/favicon.png"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/master.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/properties.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/nav.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/header.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/main.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/footer.css"/>
+
+        <link rel="stylesheet" href="https://labendowicz.pl/Forest-Search/css/animation.css"/>
+
+        <script src="https://labendowicz.pl/Wilga/js/Wilga.js"></script>
+    </head>
+    <body class="container">
+    <aside class="aside-section">
+        <nav class="aside-container jc-space-beetwen">
+            <div style="padding: 15px">
+                <img src="https://britenet.com.pl/img/logo.png" style="height: 15px"></img>
+            </div>
+            <div></div>
+            <!--            <button type="button" name="button" class="btn" id="themebutton"></button>-->
+        </nav>
+    </aside>
+    <div class="content-section">
+
+        <header class="header-section-s">
+            <div class="header-section-container">
+                <div class="m-flex-row-container jc-space-beetwen width-100">
+                    <div class="flex-column-container width-45">
+                        <div class="header-title">Thanks</div>
+                    </div>
+                    <!-- <div class="flex-column-container width-45">
+                    </div> -->
+                </div>
+            </div>
+        </header>
+
+        <main class="main-section">
+            <div class="main-container">
+
+                <section class="card" id="form">
+                    <div class="m-flex-row-container jc-center">
+                        <div class="width-55 flex-column-container">
+                            <div>
+                                <div class="card-header">We will contact with you</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 100px"></div>
+                </section>
+            </div>
+        </main>
+        <footer class="footer-section">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h2 class="footer-column-header">Copyright</h2>
+                    <div class="footer-copyright">© 2021 Jakub Łabendowicz. <br></br> Wszelkie prawa zastrzerzone.</div>
+                </div>
+                <div class="footer-column">
+                    <!--                    <h2 class="footer-column-header">Projekty</h2>-->
+                    <!--                    <a href="" class="footer-link">Home Space</a>-->
+                    <!--                    <a href="" class="footer-link">Kotlin Calculator</a>-->
+                    <!--                    <a href="https://labendowicz.pl/bubbles/" class="footer-link">Bubbles</a>-->
+                    <!--                    <a href="https://labendowicz.pl/Freestylerandomizer/" class="footer-link">Freestyle Randomizer</a>-->
+                    <!--                    <br></br><br></br>-->
+                    <!--                    <h2 class="footer-column-header">CV</h2>-->
+                    <!--                    <a href="CV.pdf" class="footer-link">Zobacz</a>-->
+                </div>
+                <div class="footer-column">
+                    <!--                    <h2 class="footer-column-header">Social</h2>-->
+                    <!--                    <a href="https://www.facebook.com/JaLabendowicz" class="footer-link">Facebook</a>-->
+                    <!--                    <a href="https://www.linkedin.com/in/%C5%82abendowicz-jakub/" class="footer-link">LinkedIn</a>-->
+                    <!--                    <a href="https://github.com/jakubLabendowicz" class="footer-link">GitHub</a>-->
+                    <!--                    <a href="https://gitlab.com/jalabendowicz" class="footer-link">GitLab</a>-->
+                    <!--                    <br></br><br></br>-->
+                    <!--                    <h2 class="footer-column-header">Kontakt</h2>-->
+                    <!--                    <a href="" class="footer-link">E-mail</a>-->
+                </div>
+                <div class="footer-column">
+                    <!--                    <h2 class="footer-column-header">Mapa strony</h2>-->
+                    <!--                    <a href="#form" class="footer-link">Formularz kontaktowy</a>-->
+                    <!--                    <a href="#contact" class="footer-link">Kontakt</a>-->
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://labendowicz.pl/jakubLabendowicz.github.io/js/Theme.js"></script>
+    <script src="https://labendowicz.pl/jakubLabendowicz.github.io/js/form.js"></script>
+    <script src="https://labendowicz.pl/Forest-Search/js/animation.js"></script>
+    </body>
+    </html>
+
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+    <!--  If necessary, please modify the charset parameter to specify the        -->
+    <!--  character set of your HTML page.                                        -->
+    <!--  ----------------------------------------------------------------------  -->
+
+    <!--    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>-->
+
+    <!--    &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+    <!--    &lt;!&ndash;  NOTE: Please add the following <FORM> element to your page.             &ndash;&gt;-->
+    <!--    &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+
+    <!--    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">-->
+
+    <!--        <input type="hidden" name="oid" value="00D7Q000000I1H7"/>-->
+    <!--        <input type="hidden" name="retURL" value="https://medall-developer-edition.eu44.force.com/randomdoctors"/>-->
+
+    <!--        &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+    <!--        &lt;!&ndash;  NOTE: These fields are optional debugging elements. Please uncomment    &ndash;&gt;-->
+    <!--        &lt;!&ndash;  these lines if you wish to test in debug mode.                          &ndash;&gt;-->
+    <!--        &lt;!&ndash;  <input type="hidden" name="debug" value=1>                              &ndash;&gt;-->
+    <!--        &lt;!&ndash;  <input type="hidden" name="debugEmail"                                  &ndash;&gt;-->
+    <!--        &lt;!&ndash;  value="jakub.labendowicz@britenet.com.pl">                              &ndash;&gt;-->
+    <!--        &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+
+    <!--        <label for="first_name">First Name</label><input  id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br/>-->
+
+    <!--        <label for="last_name">Last Name</label><input  id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br/>-->
+
+    <!--        <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br/>-->
+
+    <!--        <label for="company">Company</label><input  id="company" maxlength="40" name="company" size="20" type="text" /><br/>-->
+
+    <!--        <label for="city">City</label><input  id="city" maxlength="40" name="city" size="20" type="text" /><br/>-->
+
+    <!--&lt;!&ndash;        <label for="state">State/Province</label><input  id="state" maxlength="20" name="state" size="20" type="text" /><br/>&ndash;&gt;-->
+
+    <!--        <input type="submit" name="submit"/>-->
+
+    <!--    </form>-->
+
+</apex:page>

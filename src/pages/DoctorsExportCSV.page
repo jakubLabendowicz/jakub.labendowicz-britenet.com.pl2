@@ -1,0 +1,6 @@
+<apex:page controller="DoctorsSearcherController" contentType="application/vnd.ms-excel#Doctors_CSV.csv"
+           readOnly="true">{!CSVHeaders}
+    <apex:repeat value="{!doctorsList}" var="doctor">
+{!doctor.First_name__c};{!doctor.Name};{!doctor.Email__c};{!doctor.City__c};{!doctor.Country__c}
+    </apex:repeat>
+</apex:page>

@@ -1,0 +1,114 @@
+<apex:page id="DoctorsImportFromCSV" controller="DoctorsImportController">
+    <apex:includeScript value="{! $Resource.jQuery }"/>
+    <style type="text/css">
+        #inputFile {
+            margin-left: 10px;
+        }
+        #readFileButton {
+            margin-left: 10px;
+        }
+        #spinnerBackground {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.75;
+            z-index: 1000;
+            background-color: black;
+        }
+        #spinnerIcon {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1001;
+            margin: 30% 50%;
+        }
+    </style>
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div id="spinnerBackground">
+                &nbsp;
+            </div>
+            <div id="spinnerIcon">
+                <img src="{!URLFOR($Resource.spinnerIcon)}"/>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:form id="form">
+        <apex:pagemessages />
+        <apex:sectionHeader title="{!$Label.doctorsImportTitle}" subtitle="{!$Label.doctorsImportSubtitle}" />
+        <apex:pageBlock id="pageBlock" mode="maindetail">
+            <apex:pageBlock rendered="{! doctors.size == 0}" id="importPanel" mode="maindetail">
+                <apex:inputFile id="inputFile" accept=".csv" value="{!csvFileBody}" filename="{!csvAsString}"
+                                onChange="checkFileFormat(event,id)"/><br/><br/>
+                <apex:commandButton id="readFileButton" value="{! $Label.Read_File}" action="{!importCSVFile}" status="status"/>
+            </apex:pageBlock>
+            <apex:pageBlock rendered="{! doctors.size != 0 && doctors.size != null}" title="{! $Label.Records_To_Import}: {!doctors.size}">
+                <apex:pageblocktable value="{!doctors}" var="doctorWrapper">
+                    <apex:column headerValue="{!$Label.Select}">
+                        <apex:inputCheckbox value="{!doctorWrapper.isChecked}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.FirstName}">
+                        <apex:outputText value="{!doctorWrapper.firstName}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.LastName}">
+                        <apex:outputText value="{!doctorWrapper.lastName}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.emailLabel}">
+                        <apex:outputText value="{!doctorWrapper.email}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.City}">
+                        <apex:outputText value="{!doctorWrapper.city}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.countryLabel}">
+                        <apex:outputText value="{!doctorWrapper.doctorCountry}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.Status}">
+                        <apex:outputText value="{!doctorWrapper.backMessage}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.Link}">
+                        <apex:outputLink value="{! URLFOR($Action.Doctor__c.View, doctorWrapper.Id) }" target="_blank"
+                                         rendered="{!IF(doctorWrapper.isImportSuccess, true, false)}">
+                                                        {!$Label.View}
+                        </apex:outputLink>
+                    </apex:column>
+                </apex:pageblocktable>
+                <table style="width: 100%;" id="commandButtonTable">
+                    <tr>
+                        <td style="width: 50%">
+                            <apex:commandButton style="margin: 5px;" value="{!$Label.Select_All}" action="{!selectAll}" reRender="pageBlock"/>
+                            <apex:commandButton style="margin: 5px;" value="{!$Label.De_Select_All}" action="{!deSelectAll}" reRender="pageBlock"/>
+                            <apex:commandButton style="margin: 5px;" value="{!$Label.Invert_All}" action="{!invertAll}" reRender="pageBlock"/>
+                        </td>
+                        <td style="width: 40%">
+                            <apex:commandButton style="margin: 5px;" value="{!$Label.Import}" action="{!insertAll}" reRender="pageBlock" status="status"/>
+                            <apex:commandButton style="margin: 5px;" value="{!$Label.Clear}" action="{!clearAll}" reRender="pageBlock" status="status"/>
+                        </td>
+                        <td style="width: 10%">
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+        </apex:pageBlock>
+    </apex:form>
+    <script>
+    var hash = {
+      '.csv'  : 1,
+      '.CSV'  : 1
+    };
+    j$ = jQuery.noConflict();
+    function checkFileFormat(event, id) {
+        var re = /\..+$/;
+        var extension = event.target.files[0].name.match(re);
+        if(hash[extension]) {
+
+        } else {
+            alert('Uploaded file should be csv');
+            document.getElementById(id).value ='';
+        }
+    }
+    </script>
+</apex:page>

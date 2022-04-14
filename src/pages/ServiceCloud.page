@@ -1,0 +1,284 @@
+<apex:page controller="RandomDoctorsController" lightningStylesheets="true" showHeader="false">
+    <!--    <apex:pageMessages />-->
+    <!--    <apex:slds />-->
+    <!--    <apex:sectionHeader title="{!$Label.RandomDoctorsTitle}" subtitle="{!$Label.RandomDoctorsSubtitle}"/>-->
+    <!--    <apex:pageBlock >-->
+    <!--        <apex:dataTable value="{!doctorsList}" var="doctor" styleClass="slds-table slds-table_cell-buffer slds-table_bordered">-->
+    <!--            <apex:column value="{!doctor.First_name__c}" headerValue="{!$Label.firstName}" />-->
+    <!--            <apex:column value="{!doctor.Name}" headerValue="{!$Label.lastname}" />-->
+    <!--            <apex:column value="{!doctor.Email__c}" headerValue="{!$Label.email}" />-->
+    <!--            <apex:column value="{!doctor.City__c}" headerValue="{!$Label.city}" />-->
+    <!--            <apex:column value="{!doctor.Country__c}" headerValue="{!$Label.countryLabel}" />-->
+    <!--        </apex:dataTable>-->
+    <!--    </apex:pageBlock>-->
+
+    <html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Jakub Łabendowicz</title>
+        <link rel="icon" href="https://labendowicz.pl/jakubLabendowicz.github.io/graphics/favicon.png"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/master.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/properties.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/nav.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/header.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/main.css"/>
+        <link rel="stylesheet" href="https://labendowicz.pl/jakubLabendowicz.github.io/css/footer.css"/>
+
+        <link rel="stylesheet" href="https://labendowicz.pl/Forest-Search/css/animation.css"/>
+
+        <script src="https://labendowicz.pl/Wilga/js/Wilga.js"></script>
+    </head>
+    <body class="container">
+    <aside class="aside-section">
+        <nav class="aside-container jc-space-beetwen">
+            <div style="padding: 15px">
+                <img src="https://britenet.com.pl/img/logo.png" style="height: 15px"></img>
+            </div>
+            <div></div>
+            <!--            <button type="button" name="button" class="btn" id="themebutton"></button>-->
+        </nav>
+    </aside>
+    <div class="content-section">
+
+        <header class="header-section-s">
+            <div class="header-section-container">
+                <div class="m-flex-row-container jc-space-beetwen width-100">
+                    <div class="flex-column-container width-45">
+                        <div class="header-title">Support</div>
+                    </div>
+                    <!-- <div class="flex-column-container width-45">
+                    </div> -->
+                </div>
+            </div>
+        </header>
+
+        <main class="main-section">
+            <div class="main-container">
+
+                <section class="card" id="form">
+                    <div class="m-flex-row-container jc-center">
+                        <div class="width-55 flex-column-container">
+                            <div>
+                                <div class="card-header">Help Form</div>
+                            </div>
+                            <form class="flex-column-container jc-center" id="myform" action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
+                                <input type="hidden" name="orgid" value="00D7Q000000I1H7"/>
+                                <input type="hidden" name="retURL" value="https://medall-developer-edition.eu44.force.com/randomdoctors/Done"/>
+
+                                <div class="">
+                                    <label class="width-100 card-text">Name</label>
+                                    <input class="width-100 card-input" style="padding: 0px;" id="name" maxlength="40" name="name" size="20" type="text"></input>
+                                </div>
+                                <div class="">
+                                    <label class="width-100 card-text">Company</label>
+                                    <input class="width-100 card-input" style="padding: 0px;" id="company" maxlength="80" name="company" size="20" type="text"></input>
+                                </div>
+                                <div class="">
+                                    <label class="width-100 card-text">Email*</label>
+                                    <label id="error" class="width-100 card-text" style="color:red; display: none">Enter an email address in the correct format</label>
+                                    <input class="width-100 card-input" style="padding: 0px;" id="email" maxlength="80" name="email" required="required" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" size="20" type="email"></input>
+                                </div>
+                                <div class="">
+                                    <label class="width-100 card-text">Phone</label>
+                                    <input class="width-100 card-input" style="padding: 0px;" id="phone" maxlength="40" name="phone" size="20" type="text"></input>
+                                </div>
+                                <div class="">
+                                    <label class="width-100 card-text">Subject</label>
+                                    <input class="width-100 card-input" style="padding: 0px;" id="subject" maxlength="40" name="subject" size="20" type="text"></input>
+                                </div>
+                                <div class="">
+                                    <label class="width-100 card-text" for="reason">Case Reason</label>
+                                    <select class="width-100 card-input" style="padding: 0px;" id="reason" name="reason">
+                                        <option value="">--None--</option>
+                                        <option value="Installation">Installation</option>
+                                        <option value="Equipment Complexity">Equipment Complexity</option>
+                                        <option value="Performance">Performance</option>
+                                        <option value="Breakdown">Breakdown</option>
+                                        <option value="Equipment Design">Equipment Design</option>
+                                        <option value="Feedback">Feedback</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label class="width-100 card-text">Description</label>
+                                    <input class="width-100 card-input" style="padding: 0px;" id="description" name="description" size="20" type="text"></input>
+                                </div>
+<!--                                <div class="width-100">-->
+<!--                                    <label class="width-100 card-text">Description</label>-->
+<!--                                    <div style="width-100"></div>-->
+<!--                                    <textarea class="width-100 card-input" id="description" name="description" style="height: 150px"></textarea>-->
+<!--                                </div>-->
+                                <!--                                <div class="flex-row-container jc-center">-->
+                                <!--                                    <div class="width-45 card-button" id="form-button">-->
+                                <!--                                        <input type="submit" name="" value="Submit" class="card-button-container width-100" id="form-button-container" onclick="generate()"/>-->
+                                <!--                                    </div>-->
+
+                                <!--                                </div>-->
+                            </form>
+                            <div class="flex-row-container jc-center">
+                                <div class="width-45 card-button" id="form-button">
+                                    <input type="button" name="" value="Send" class="card-button-container width-100" id="form-button-container"/>
+                                    <!--                                    <input type="button" id="submit">SubmitForm</input>&lt;!&ndash; Outside of form &ndash;&gt;-->
+                                </div>
+
+                            </div>
+                            <script>
+                                function submitForm() {
+                                    document.getElementById('myform').submit()
+                                }
+
+                                document.getElementById('form-button-container').onclick = function() {
+                                    let email = document.getElementById('email').value;
+                                    let error = document.getElementById('error');
+                                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                                    if(re.test(email)) {
+                                        generate();
+                                        setTimeout(submitForm, 3500);
+                                        error.style.display = "none";
+                                    } else {
+                                        error.style.display = "block";
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <footer class="footer-section">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h2 class="footer-column-header">Copyright</h2>
+                    <div class="footer-copyright">© 2021 Jakub Łabendowicz. <br></br> Wszelkie prawa zastrzerzone.</div>
+                </div>
+                <div class="footer-column">
+                </div>
+                <div class="footer-column">
+                </div>
+                <div class="footer-column">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://labendowicz.pl/jakubLabendowicz.github.io/js/Theme.js"></script>
+    <script src="https://labendowicz.pl/jakubLabendowicz.github.io/js/form.js"></script>
+    <script src="https://labendowicz.pl/Forest-Search/js/animation.js"></script>
+    </body>
+    </html>
+
+<!--    &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+<!--    &lt;!&ndash;  NOTE: Please add the following <META> element to your page <HEAD>.      &ndash;&gt;-->
+<!--    &lt;!&ndash;  If necessary, please modify the charset parameter to specify the        &ndash;&gt;-->
+<!--    &lt;!&ndash;  character set of your HTML page.                                        &ndash;&gt;-->
+<!--    &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+
+<!--&lt;!&ndash;    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">&ndash;&gt;-->
+
+<!--    &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+<!--    &lt;!&ndash;  NOTE: Please add the following <FORM> element to your page.             &ndash;&gt;-->
+<!--    &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+
+<!--    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">-->
+
+<!--        <input type="hidden" name="orgid" value="00D7Q000000I1H7"/>-->
+<!--        <input type="hidden" name="retURL" value="http://"/>-->
+
+<!--        &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+<!--        &lt;!&ndash;  NOTE: These fields are optional debugging elements. Please uncomment    &ndash;&gt;-->
+<!--        &lt;!&ndash;  these lines if you wish to test in debug mode.                          &ndash;&gt;-->
+<!--        &lt;!&ndash;  <input type="hidden" name="debug" value=1>                              &ndash;&gt;-->
+<!--        &lt;!&ndash;  <input type="hidden" name="debugEmail"                                  &ndash;&gt;-->
+<!--        &lt;!&ndash;  value="jakub.labendowicz@britenet.com.pl">                              &ndash;&gt;-->
+<!--        &lt;!&ndash;  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;  &ndash;&gt;-->
+
+<!--        <label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br></br>-->
+
+<!--        <label for="company">Company</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br></br>-->
+
+<!--        <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br></br>-->
+
+<!--        <label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br></br>-->
+
+<!--        <label for="subject">Subject</label><input  id="subject" maxlength="80" name="subject" size="20" type="text" /><br></br>-->
+
+<!--        <label for="description">Description</label><textarea name="description"></textarea><br></br>-->
+
+<!--        <input type="submit" name="submit"/>-->
+
+<!--    </form>-->
+
+
+
+
+
+
+
+
+
+
+    <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+            background-color: #005290;
+            font-family: "Arial", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+            outline: 1px solid #005290;
+        }
+    </style>
+
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://britenetspkazoo-dev-ed.my.salesforce.com',
+			'https://medall-developer-edition.eu44.force.com/randomdoctors',
+			gslbBaseURL,
+			'00D7Q000000I1H7',
+			'Chat_Agents',
+			{
+				baseLiveAgentContentURL: 'https://c.la2-c1-fra.salesforceliveagent.com/content',
+				deploymentId: '5727Q0000004eAw',
+				buttonId: '5737Q0000004ekn',
+				baseLiveAgentURL: 'https://d.la2-c1-fra.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'Chat_Agents',
+				isOfflineSupportEnabled: false
+			}
+		);
+	};
+
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://britenetspkazoo-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
+
+</apex:page>

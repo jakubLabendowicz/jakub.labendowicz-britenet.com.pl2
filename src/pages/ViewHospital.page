@@ -1,0 +1,46 @@
+<apex:page title="Hospital Detail: {!Hospital__c.Name}" standardController="Hospital__c">
+    <apex:sectionHeader title="{!$Label.Hospital_Title}" subtitle="{!Hospital__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.View_Hospital_Block_Title}" mode="maindetail">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="{!$Label.Edit_Button}" action="{!Edit}"/>
+                <apex:commandButton value="{!$Label.Delete_Button}" action="{!Delete}"/>
+                <apex:commandButton value="{!$Label.Clone_Button}"
+                                    action="{!URLFOR($Action.Hospital__c.Clone,Hospital__c.id)}"/>
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Information_Section}">
+                <apex:outputField value="{!Hospital__c.Name}"/>
+                <apex:outputField value="{!Hospital__c.Website__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Address_Information_Section}">
+                <apex:outputField value="{!Hospital__c.City__c}"/>
+                <apex:outputField value="{!Hospital__c.Postcode__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.System_Information_Section}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Created By"/>
+                    <apex:outputText value="{0}, {1}">
+                        <apex:param value="{!Hospital__c.CreatedBy.Name}"/>
+                        <apex:param value="{!Hospital__c.CreatedDate}"/>
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Owner"/>
+                    <apex:outputField value="{!Hospital__c.Owner.Name}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Last Modified By"/>
+                    <apex:outputText value="{0}, {1}">
+                        <apex:param value="{!Hospital__c.LastModifiedBy.Name}"/>
+                        <apex:param value="{!Hospital__c.LastModifiedDate}"/>
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="Contracts__r"/>
+</apex:page>

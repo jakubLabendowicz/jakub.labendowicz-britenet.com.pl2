@@ -1,0 +1,336 @@
+<apex:page title="{!$Label.MechanicsSearcherSubtitle}" id="MechanicsSearcher" controller="MechanicsSearcherController"
+           lightningStylesheets="true">
+    <apex:pageMessages />
+    <apex:slds />
+    <style type="text/css">
+      #topButtonsSection {
+          display: flex;
+          justify-content: flex-end;
+          gap: 10px;
+          margin: 10px 0px;
+      }
+      #buttonsSection {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin: 10px 0px;
+      }
+      #paginationSection {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          gap: 10px;
+          position: absolute;
+          bottom: 0px;
+          margin-bottom: 10px;
+          align-items: center;
+      }
+      #noResultsInfoSection {
+          font-size: 13.104px;
+          font-weight: bold;
+          margin-top: 10px;
+          display: flex;
+          justify-content: center;
+      }
+      #spinnerBackground {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0.75;
+          z-index: 1000;
+          background-color: black;
+      }
+      #spinnerIcon {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          z-index: 1001;
+          margin: 30% 50%;
+      }
+      .searchField {
+          width: 200px;
+      }
+
+
+    </style>
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div id="spinnerBackground">
+                &nbsp;
+            </div>
+            <img id="spinnerIcon" src="{!URLFOR($Resource.spinnerIcon)}"/>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:sectionHeader title="{!$Label.searcherTitle}" subtitle="{!$Label.MechanicsSearcherSubtitle}"/>
+    <apex:form id="form">
+        <body>
+        <apex:pageBlock id="pageBlock" mode="maindetail">
+
+            <apex:outputPanel id="error" rendered="{!showError}">
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>Error: {!error}
+                    </h2>
+                    <div class="slds-notify__close">
+                        <apex:commandButton styleClass="slds-button slds-button_icon slds-button_icon-small slds-button_icon-inverse"
+                                reRender="pageBlock"
+                                action="{!closeError}" image="{!URLFOR($Resource.Close)}">
+                        </apex:commandButton>
+                    </div>
+                </div>
+            </apex:outputPanel>
+
+            <div id="topButtonsSection">
+                <apex:commandButton styleClass="slds-button slds-button_neutral" reRender="modalPanel"
+                                    value="{!$Label.New}"
+                                    onComplete="showNewModal()" action="{!showNewModal}"/>
+                <div style="width:10px;"></div>
+            </div>
+            <apex:pageBlockSection id="searchFieldsSection">
+                <apex:inputField styleClass="slds-input" style="width: 200px;"
+                                 value="{!searchedMechanic.First_name__c}"/>
+                <apex:inputField styleClass="slds-input" style="width: 200px;" value="{!searchedMechanic.Name}"/>
+                <apex:inputText styleClass="slds-input" style="width: 200px;" value="{!searchedMechanic.Email__c}"/>
+                <apex:inputField styleClass="slds-input" style="width: 200px;" value="{!searchedMechanic.Country__c}"/>
+            </apex:pageBlockSection>
+
+            <div id="buttonsSection">
+                <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.searchButton}"
+                                    action="{!search}" reRender="pageBlock" status="status"/>
+                <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.clearButton}"
+                                    action="{!clear}" reRender="pageBlock" status="status"/>
+            </div>
+            <apex:pageBlockSection columns="1" id="resultsSection">
+                <apex:dataTable value="{!mechanicsList}" var="mechanic"
+                                styleClass="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <apex:column styleClass="slds-cell_action-mode">
+                        <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                            <apex:commandButton onclick="showOptions('{!mechanic.externalId}')"
+                                                onBlur="closeOptions('{!mechanic.externalId}')" reRender="none"
+                                                style="padding: 4px;" image="{!URLFOR($Resource.arrowDown)}"
+                                                styleClass="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+                                                tabindex="0">
+                            </apex:commandButton>
+                            <div id="{!mechanic.externalId}" class="slds-dropdown slds-dropdown_left"
+                                 style="display:none">
+                                <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+                                    <li class="slds-dropdown__item" role="presentation">
+                                        <apex:commandLink value="{!$Label.Edit_Button}"
+                                                          reRender="modalPanel" status="pageStatus"
+                                                          action="{!showEditModal}" onComplete="showEditModal()">
+                                            <apex:param value="{!mechanic.externalId}" name="mechanicId"
+                                                        assignTo="{!mechanicId}"/>
+                                        </apex:commandLink>
+                                    </li>
+                                    <li class="slds-dropdown__item" role="presentation">
+                                        <apex:commandLink value="{!$Label.Delete_Button}"
+                                                          reRender="none"
+                                                          onClick="showDeleteModal('{!mechanic.firstName} {!mechanic.lastName}')"
+                                                          status="pageStatus">
+                                            <apex:param value="{!mechanic.externalId}" name="mechanicId"
+                                                        assignTo="{!mechanicId}"/>
+                                        </apex:commandLink>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </apex:column>
+                    <apex:column value="{!mechanic.firstName}" headerValue="{!$Label.firstName}"/>
+                    <apex:column value="{!mechanic.lastName}" headerValue="{!$Label.lastname}"/>
+                    <apex:column value="{!mechanic.email}" headerValue="{!$Label.email}"/>
+                    <apex:column value="{!mechanic.city}" headerValue="{!$Label.city}"/>
+                    <apex:column value="{!mechanic.country}" headerValue="{!$Label.countryLabel}"/>
+                </apex:dataTable>
+                <apex:outputLabel value="{!$Label.results}{!resultSize}"/>
+            </apex:pageBlockSection>
+
+            <div id="noResultsInfoSection">
+                <apex:outputText value="{!$Label.noResultsInfo}" rendered="{!noResult}"/>
+            </div>
+        </apex:pageBlock>
+        </body>
+
+
+        <div id="deleteModal" style="display: none;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="delete-modal-title" class="slds-modal__title slds-hyphenate">Confirm delete
+                            operation </h1>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <apex:commandButton styleClass="slds-button slds-button_brand" value="{!$Label.ConfirmButton}"
+                                            onClick="closeDeleteModal()" reRender="pageBlock"
+                                            action="{!deleteMechanic}"/>
+                        <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.Cancel_Button}"
+                                            reRender="none" onClick="closeDeleteModal()"/>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </div>
+
+
+        <div id="modal" style="display: none;" class="modal slds-scope">
+
+            <section id="modal-section" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-title" class="slds-modal__title slds-hyphenate"></h2>
+                    </header>
+                    <apex:outputPanel id="modalPanel">
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <apex:outputLabel styleClass="slds-form-element__label"
+                                                          value="{! $Label.FirstName}" id="firstName"/>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.firstName}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-5"></div>
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="text-input-id-48">
+                                            <abbr class="slds-required" title="required">* </abbr>{! $Label.LastName}
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.lastName}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="text-input-id-48">
+                                            <abbr class="slds-required" title="required">* </abbr>{! $Label.Email}
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.email}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-5"></div>
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <apex:outputLabel styleClass="slds-form-element__label"
+                                                          value="{! $Label.City}"/>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.city}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <apex:outputLabel styleClass="slds-form-element__label"
+                                                          value="{! $Label.Street}"/>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.street}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-5"></div>
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <apex:outputLabel styleClass="slds-form-element__label"
+                                                          value="{! $Label.Postcode}"/>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.postalCode}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-5">
+                                    <div class="slds-form-element">
+                                        <apex:outputLabel styleClass="slds-form-element__label"
+                                                          value="{! $Label.CountryLabel}"/>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText styleClass="slds-input"
+                                                            value="{!mechanicWrapper.country}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <footer class="slds-modal__footer"
+                            style="display:flex; flex-direction: row; gap: 5px; justify-content: flex-end;">
+                        <div id="modalCreateButton" style="display: none;">
+                            <apex:commandButton styleClass="slds-button slds-button_brand"
+                                                value="{!$Label.CreateButton}" onClick="closeModal()"
+                                                reRender="pageBlock"
+                                                action="{!createMechanic}" status="status"/>
+                        </div>
+                        <div id="modalEditButton" style="display: none;">
+                            <apex:commandButton styleClass="slds-button slds-button_brand"
+                                                value="{!$Label.Edit_Button}" onClick="closeModal()"
+                                                reRender="pageBlock"
+                                                action="{!editMechanic}" status="status"/>
+                        </div>
+                        <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                            value="{!$Label.Cancel_Button}" reRender="none"
+                                            onClick="closeModal()"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+        </div>
+
+
+    </apex:form>
+    <script>
+       function showOptions(id){
+           document.getElementById(id).style.display = 'block';
+      }
+
+      function closeOptions(id){
+          setTimeout(
+              () => {
+                 document.getElementById(id).style.display = 'none';
+              }, 200
+          );
+      }
+
+      const showNewModal = () => {
+          document.getElementById('modal').style.display = 'block';
+          document.getElementById('modal-title').innerHTML = 'Create new mechanic';
+          document.getElementById('modalCreateButton').style.display = 'block';
+      }
+
+      function showEditModal(){
+          document.getElementById('modal').style.display = 'block';
+          document.getElementById('modal-title').innerHTML = 'Edit mechanic';
+          document.getElementById('modalEditButton').style.display = 'block';
+      }
+
+      const closeModal = () => {
+          document.getElementById('modal').style.display = 'none';
+          document.getElementById('modalCreateButton').style.display = 'none';
+          document.getElementById('modalEditButton').style.display = 'none';
+      }
+
+      function showDeleteModal(name){
+          document.getElementById('deleteModal').style.display = 'block';
+          document.getElementById('delete-modal-title').innerHTML = 'Delete ' + name;
+      }
+
+      function closeDeleteModal(){
+          document.getElementById('deleteModal').style.display = 'none';
+      }
+    </script>
+</apex:page>

@@ -1,0 +1,30 @@
+<apex:page title="Hospital Edit: {!Hospital__c.Name}" standardController="Hospital__c">
+    <apex:sectionHeader title="{!$Label.Hospital_Title}" subtitle="{!Hospital__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.Edit_Hospital_Block_Title}" mode="edit">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="{!$Label.Save_Button}" action="{!Save}"/>
+                <apex:commandButton value="{!$Label.Save_And_New_Button}" action="{!Save}"/>
+                <apex:commandButton value="{!$Label.Cancel_Button}" action="{!Cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Information_Section}">
+                <apex:inputField required="true" value="{!Hospital__c.Name}"/>
+                <apex:inputField value="{!Hospital__c.Website__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.Address_Information_Section}">
+                <apex:inputField value="{!Hospital__c.City__c}"/>
+                <apex:inputField value="{!Hospital__c.Postcode__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true"
+                                   title="{!$Label.System_Information_Section}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Owner"/>
+                    <apex:outputField value="{!Hospital__c.Owner.Name}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

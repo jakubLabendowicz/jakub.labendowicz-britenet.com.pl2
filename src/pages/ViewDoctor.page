@@ -1,0 +1,55 @@
+<apex:page title="Doctor Detail: {!Doctor__c.Name}" standardController="Doctor__c">
+    <apex:sectionHeader title="{!$Label.Doctor_Title}" subtitle="{!Doctor__c.Name}" />
+    <apex:form >
+        <apex:pageBlock title="{!$Label.View_Doctor_Block_Title}" mode="maindetail">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="{!$Label.Edit_Button}" action="{!Edit}"/>
+                <apex:commandButton value="{!$Label.Delete_Button}" action="{!Delete}"/>
+                <apex:commandButton value="{!$Label.Clone_Button}" action="{!URLFOR($Action.Doctor__c.Clone,Doctor__c.id)}"/>
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true" title="{!$Label.Information_Section}">
+                <apex:outputField value="{!Doctor__c.Name}"/>
+                <apex:outputField value="{!Doctor__c.First_name__c}"/>
+                <apex:outputField value="{!Doctor__c.Date_of_birth__c}"/>
+                <apex:outputField value="{!Doctor__c.Medical_field__c}"/>
+                <apex:outputField value="{!Doctor__c.Ward__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true" title="{!$Label.Address_Information_Section}">
+                <apex:outputField value="{!Doctor__c.City__c}"/>
+                <apex:outputField value="{!Doctor__c.Street__c}"/>
+                <apex:outputField value="{!Doctor__c.Postcode__c}"/>
+                <apex:outputField value="{!Doctor__c.Country__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true" title="{!$Label.Contact_Information_Section}">
+                <apex:outputField value="{!Doctor__c.Email__c}"/>
+                <apex:outputField value="{!Doctor__c.Phone_number__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true" title="{!$Label.Detailed_Information_Section}">
+                <apex:outputField value="{!Doctor__c.Salary__c}"/>
+                <apex:outputField value="{!Doctor__c.Receive_Birthday_Emails__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" columns="2" showHeader="true" title="{!$Label.System_Information_Section}">
+                <apex:pageBlockSectionItem >
+					<apex:outputLabel value="Created By"/>
+                    <apex:outputText value="{0}, {1}">
+                        <apex:param value="{!Doctor__c.CreatedBy.Name}"/>
+                        <apex:param value="{!Doctor__c.CreatedDate}"/>
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+					<apex:outputLabel value="Owner"/>
+                    <apex:outputField value="{!Doctor__c.Owner.Name}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+					<apex:outputLabel value="Last Modified By"/>
+                    <apex:outputText value="{0}, {1}">
+                        <apex:param value="{!Doctor__c.LastModifiedBy.Name}"/>
+                        <apex:param value="{!Doctor__c.LastModifiedDate}"/>
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="Contracts__r"/>
+</apex:page>

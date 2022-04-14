@@ -1,0 +1,102 @@
+<apex:page title="{!$Label.searcherSubtitle}" id="DoctorsSearcher" controller="DoctorsSearcherController">
+    <style type="text/css">
+        #buttonsSection {
+            display: flex;
+            justify-content:
+            center;
+            gap: 10px;
+            margin: 10px 0px;
+        }
+        #paginationSection {
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            gap: 10px;
+            position: absolute;
+            bottom: 0px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        #noResultsInfoSection {
+            font-size: 13.104px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        #spinnerBackground {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.75;
+            z-index: 1000;
+            background-color: black;
+        }
+        #spinnerIcon {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1001;
+            margin: 30% 50%;
+        }
+        .searchField {
+            width: 200px;
+            padding: 0px;
+        }
+    </style>
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div id="spinnerBackground">
+                &nbsp;
+            </div>
+            <div id="spinnerIcon">
+                <img src="{!URLFOR($Resource.spinnerIcon)}"/>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:sectionHeader title="{!$Label.searcherTitle}" subtitle="{!$Label.searcherSubtitle}"/>
+    <apex:form >
+        <apex:pageBlock id="pageBlock" mode="maindetail">
+            <apex:pageBlockSection id="searchFieldsSection">
+                <apex:inputField styleClass="searchField" value="{!searchedDoctor.First_name__c}"/>
+                <apex:inputField styleClass="searchField" value="{!searchedDoctor.Name}"/>
+                <apex:inputText styleClass="searchField" value="{!searchedDoctor.Email__c}"/>
+                <apex:inputField styleClass="searchField" value="{!searchedDoctor.Country__c}"/>
+            </apex:pageBlockSection>
+            <div id="buttonsSection">
+                <apex:commandButton value="{!$Label.searchButton}" action="{!search}" status="status"
+                                    reRender="pageBlock"/>
+                <apex:commandButton value="{!$Label.clearButton}" action="{!clear}" reRender="pageBlock"/>
+                <apex:commandButton value="{!$Label.exportCSVButton}" action="{!exportCSV}" disabled="{!noResult}"/>
+                <apex:commandButton value="{!$Label.exportXLSButton}" action="{!exportXLS}" disabled="{!noResult}"/>
+            </div>
+            <apex:pageBlockSection id="resultsSection" columns="1" collapsible="false" title="{!$Label.results}{!resultSize}">
+                <apex:pageBlockTable value="{!doctors}" var="doctor">
+                    <apex:column value="{!doctor.First_name__c}" headerValue="{!$Label.firstName}"/>
+                    <apex:column value="{!doctor.Name}" headerValue="{!$Label.lastname}"/>
+                    <apex:column value="{!doctor.Email__c}" headerValue="{!$Label.email}"/>
+                    <apex:column value="{!doctor.City__c}" headerValue="{!$Label.city}"/>
+                    <apex:column value="{!doctor.Country__c}" headerValue="{!$Label.countryLabel}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <div id="noResultsInfoSection">
+                <apex:outputText value="{!$Label.noResultsInfo}" rendered="{!noResult}"/>
+            </div>
+            <div id="paginationSection">
+                <apex:selectList value="{!pageSize}" size="1" multiSelect="false">
+                    <apex:selectOptions value="{!pageSizeItems}"/>
+                    <apex:actionSupport event="onchange" action="{!reloadPageSize}" reRender="pageBlock"/>
+                </apex:selectList>
+                <apex:commandButton value="{!$Label.firstButton}" action="{!firstPage}" disabled="{!hasPrevious}" reRender="pageBlock"/>
+                <apex:commandButton value="{!$Label.prevButton}" action="{!prevPage}" disabled="{!hasPrevious}" reRender="pageBlock"/>
+                <apex:commandButton value="{!$Label.nextButton}" action="{!nextPage}" disabled="{!hasNext}" reRender="pageBlock"/>
+                <apex:commandButton value="{!$Label.lastButton}" action="{!lastPage}" disabled="{!hasNext}" reRender="pageBlock"/>
+                <apex:outputLabel value="{!$Label.page}{!pageNumber}/{!pagesQuantity}"/>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

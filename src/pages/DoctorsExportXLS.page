@@ -1,0 +1,5 @@
+<apex:page controller="DoctorsSearcherController" contentType="application/vnd.ms-excel#Doctors_XLS.xls" readOnly="true">{!XLSHeaders}
+    <apex:repeat value="{!doctorsList}" var="doctor">
+{!doctor.First_name__c}{!tabMark}{!doctor.Name}{!tabMark}{!doctor.Email__c}{!tabMark}{!doctor.City__c}{!tabMark}{!doctor.Country__c}
+    </apex:repeat>
+</apex:page>
